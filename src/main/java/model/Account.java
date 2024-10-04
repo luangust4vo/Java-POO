@@ -50,10 +50,6 @@ public class Account {
 		return value;
 	}
 	
-	public void setValue(double value) {
-		this.value = value;
-	}
-	
 	public Date getTransactionDate() {
 		return transactionDate;
 	}
