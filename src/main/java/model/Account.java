@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.Objects;
 
 @Entity // Specifies that this class is an entity of database
-@Table(name = "account") // Specifies a standard name for the table (´cause different OS can give names in different patterns 
+@Table(name = "account") // Specifies a standard name for the table (´cause different OS can give names in different patterns )
 public class Account {
 	@Id // Specifies that this column will be the PK of table
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // Specifies that the generation of id´s will be auto_increment / serial
