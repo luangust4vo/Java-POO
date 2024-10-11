@@ -34,7 +34,7 @@ public class AccountDAO {
 		return this.entityManager;
 	}
 	
-	public void insert(Account account) {
+	public Account insert(Account account) {
 		try {
 			// Create a new account on database
 			this.entityManager.getTransaction().begin();
@@ -46,6 +46,7 @@ public class AccountDAO {
 		}
 		
 		this.entityManager.close();
+		return account;
 	}
 	
 	public Account update(Account account) {
