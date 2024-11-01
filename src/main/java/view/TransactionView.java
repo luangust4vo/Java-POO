@@ -2,14 +2,14 @@ package view;
 
 import java.util.Date;
 
-import controller.AccountController;
-import model.Account;
+import controller.TransactionController;
+import model.Transaction;
 
-public class AccountView {
+public class TransactionView {
 
 	public static void main(String[] args) {
-		AccountController controller = new AccountController();
-		Account account = new Account();
+		TransactionController controller = new TransactionController();
+		Transaction account = new Transaction();
 		account.setAccountHolderCpf("99999999999");
 		account.setTransactionDate(new Date());
 		account.setDescription("Teste");

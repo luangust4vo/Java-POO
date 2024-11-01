@@ -6,19 +6,19 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import model.Account;
+import model.Transaction;
 
-public class AccountDAO {
-	private static AccountDAO instance;
+public class TransactionDAO {
+	private static TransactionDAO instance;
 	protected EntityManager entityManager;
 	
-	private AccountDAO() {
+	private TransactionDAO() {
 		entityManager = getEntityManager();
 	}
 	
-	public static AccountDAO getInstance() { // Just to don´t need instantiate with 'new ...' 
+	public static TransactionDAO getInstance() { // Just to don´t need instantiate with 'new ...' 
 		if (instance == null) {
-			instance = new AccountDAO();
+			instance = new TransactionDAO();
 		}
 		
 		return instance;
@@ -34,11 +34,11 @@ public class AccountDAO {
 		return this.entityManager;
 	}
 	
-	public Account insert(Account account) {
+	public Transaction insert(Transaction transaction) {
 		try {
-			// Create a new account on database
+			// Create a new transaction on database
 			this.entityManager.getTransaction().begin();
-			this.entityManager.persist(account);
+			this.entityManager.persist(transaction);
 			this.entityManager.getTransaction().commit();
 		} catch (Exception exc) {
 			this.entityManager.getTransaction().rollback();
@@ -46,21 +46,21 @@ public class AccountDAO {
 		}
 		
 		this.entityManager.close();
-		return account;
+		return transaction;
 	}
 	
-	public Account update(Account account) {
-		Account dbAccount = null;
+	public Transaction update(Transaction transaction) {
+		Transaction dbTransaction = null;
 		
 		try {			
-			if (account.getId() != null) {
+			if (transaction.getId() != null) {
 				this.entityManager.getTransaction().begin();
 				
-				dbAccount = this.findById(account.getId());
+				dbTransaction = this.findById(transaction.getId());
 				
-				if (dbAccount != null) {
-					dbAccount.setDescription(account.getDescription());
-					this.entityManager.merge(dbAccount);
+				if (dbTransaction != null) {
+					dbTransaction.setDescription(transaction.getDescription());
+					this.entityManager.merge(dbTransaction);
 				}
 				
 				this.entityManager.getTransaction().commit();
@@ -71,17 +71,17 @@ public class AccountDAO {
 		}
 		
 		this.entityManager.close();
-		return dbAccount;
+		return dbTransaction;
 	}
 	
 	public void delete(Long id) {
 		try {
 			this.entityManager.getTransaction().begin();
 			
-			Account dbAccount = this.entityManager.find(Account.class, id);
+			Transaction dbTransaction = this.entityManager.find(Transaction.class, id);
 			
-			if (dbAccount != null) {
-				this.entityManager.remove(dbAccount);
+			if (dbTransaction != null) {
+				this.entityManager.remove(dbTransaction);
 			}
 			
 			this.entityManager.getTransaction().commit();
@@ -94,12 +94,12 @@ public class AccountDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Account> list() {
-		List<Account> accounts = null;
+	public List<Transaction> list() {
+		List<Transaction> transactions = null;
 		
 		try {
 			this.entityManager.getTransaction().begin();
-			accounts = this.entityManager.createQuery("FROM account").getResultList();
+			transactions = this.entityManager.createQuery("FROM transaction").getResultList();
 			this.entityManager.getTransaction().commit();
 		} catch (Exception exc) {
 			this.entityManager.getTransaction().rollback();
@@ -107,16 +107,16 @@ public class AccountDAO {
 		}
 		
 		this.entityManager.close();
-		return accounts;
+		return transactions;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Account> listCpf(String cpf) {
-		List<Account> accounts = null;
+	public List<Transaction> listCpf(String cpf) {
+		List<Transaction> transactions = null;
 		
 		try {
 			this.entityManager.getTransaction().begin();
-			accounts = this.entityManager.createQuery("FROM account WHERE account_holder_cpf = '" + cpf + "'").getResultList();
+			transactions = this.entityManager.createQuery("FROM transaction WHERE account_holder_cpf = '" + cpf + "'").getResultList();
 			this.entityManager.getTransaction().commit();
 		} catch (Exception exc) {
 			this.entityManager.getTransaction().rollback();
@@ -124,16 +124,16 @@ public class AccountDAO {
 		}
 		
 		this.entityManager.close();
-		return accounts;
+		return transactions;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Account> listTransaction(String trans_type) {
-		List<Account> accounts = null;
+	public List<Transaction> listTransaction(String trans_type) {
+		List<Transaction> transactions = null;
 		
 		try {
 			this.entityManager.getTransaction().begin();
-			accounts = this.entityManager.createQuery("FROM account WHERE transaction_type = '" + trans_type + "'").getResultList();
+			transactions = this.entityManager.createQuery("FROM transaction WHERE transaction_type = '" + trans_type + "'").getResultList();
 			this.entityManager.getTransaction().commit();
 		} catch (Exception exc) {
 			this.entityManager.getTransaction().rollback();
@@ -141,13 +141,13 @@ public class AccountDAO {
 		}
 		
 		this.entityManager.close();
-		return accounts;
+		return transactions;
 	}
 	
-	private Account findById(Long id) {
-		Account account = this.entityManager.find(Account.class, id);
+	private Transaction findById(Long id) {
+		Transaction transaction = this.entityManager.find(Transaction.class, id);
 		this.entityManager.close();
 		
-		return account;
+		return transaction;
 	}
 }
