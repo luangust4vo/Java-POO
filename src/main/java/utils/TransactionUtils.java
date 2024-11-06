@@ -1,8 +1,12 @@
 package utils;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import model.Transaction;
 
 public class TransactionUtils {
+	
 	public static boolean validateCpf(String cpf) {	
 		cpf = cpf.replace(".", "").replace("-", "");
 		
@@ -44,5 +48,27 @@ public class TransactionUtils {
 		digit = digit < 2 ? 0 : (11 - digit);
 		
 		return digit;
+	}
+	
+	private static double calcBalance(List<Transaction> transactions) {
+		double balance = 0;
+		
+		for (Transaction transaction : transactions) {
+			if (transaction.getTransactionType().equals("deposit")) {
+				balance += transaction.getValue();
+			} else {
+				balance -= transaction.getValue();
+			}
+		}
+		
+		return balance;
+	}
+	
+	private static boolean validBalance(Transaction transaction, List<Transaction> transactions) {
+		double balance = calcBalance(transactions);
+		
+		if (transaction.getTransactionType().equals("deposit") || balance - transaction.getValue() < 0) return false;
+		
+		return true;
 	}
 }

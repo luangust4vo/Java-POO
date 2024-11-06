@@ -6,9 +6,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import model.enuns.TransactionType;
 
 import java.util.Date;
 
@@ -27,11 +31,10 @@ public class Transaction {
 	@Column(name = "description", length = 150) // length specifies the VARCHAR length
 	private String description;
 	@Column(name = "transaction_type")
-	private String transactionType;
-	@Column(name = "account_holder_name")
-	private String accountHolderName;
-	@Column(name = "account_holder_cpf")
-	private String accountHolderCpf;
+	private TransactionType transactionType;
+	@ManyToOne
+	@JoinColumn(name = "account_id")
+	private Account account;
 	
 	public Transaction() {
 		
@@ -69,27 +72,19 @@ public class Transaction {
 		this.description = description;
 	}
 	
-	public String getTransactionType() {
+	public TransactionType getTransactionType() {
 		return transactionType;
 	}
 	
-	public void setTransactionType(String transactionType) {
+	public void setTransactionType(TransactionType transactionType) {
 		this.transactionType = transactionType;
 	}
-	
-	public String getAccountHolderName() {
-		return accountHolderName;
+
+	public Account getAccount() {
+		return account;
 	}
-	
-	public void setAccountHolderName(String accountHolderName) {
-		this.accountHolderName = accountHolderName;
-	}
-	
-	public String getAccountHolderCpf() {
-		return accountHolderCpf;
-	}
-	
-	public void setAccountHolderCpf(String accountHolderCpf) {
-		this.accountHolderCpf = accountHolderCpf;
+
+	public void setAccount(Account account) {
+		this.account = account;
 	}
 }
