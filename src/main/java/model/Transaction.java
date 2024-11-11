@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import model.enuns.TransactionType;
+import model.enums.TransactionType;
 
 import java.util.Date;
 
@@ -32,6 +32,7 @@ public class Transaction {
 	private String description;
 	@Column(name = "transaction_type")
 	private TransactionType transactionType;
+	
 	@ManyToOne
 	@JoinColumn(name = "account_id")
 	private Account account;

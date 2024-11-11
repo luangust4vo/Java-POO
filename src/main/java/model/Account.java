@@ -11,16 +11,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import model.enuns.AccountType;
+import model.enums.AccountType;
 
 @Entity
+@Table(name = "account")
 public class Account {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
 	@Column(name = "open_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date openDate;
@@ -29,6 +32,7 @@ public class Account {
 	private AccountType accountType;
 	@Column(name = "is_active")
 	private boolean isActive;
+	
 	@ManyToOne
 	@JoinColumn(name = "account_holder_id")
 	private AccountHolder accountHolder;

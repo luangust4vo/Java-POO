@@ -5,8 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "account_holder")
 public class AccountHolder {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,8 +17,6 @@ public class AccountHolder {
 	private String name;
 	@Column(name = "cpf")
 	private String cpf;
-	@Column(name = "is_active")
-	private boolean isActive;
 	
 	public Long getId() {
 		return id;
@@ -40,13 +40,5 @@ public class AccountHolder {
 	
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
-	}
-
-	public boolean isActive() {
-		return isActive;
-	}
-
-	public void setActive(boolean isActive) {
-		this.isActive = isActive;
 	}
 }
