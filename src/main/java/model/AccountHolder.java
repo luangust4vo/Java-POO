@@ -15,7 +15,7 @@ public class AccountHolder {
 	private Long id;
 	@Column(name = "name")
 	private String name;
-	@Column(name = "cpf")
+	@Column(name = "cpf", unique = true, nullable = false)
 	private String cpf;
 	
 	public Long getId() {

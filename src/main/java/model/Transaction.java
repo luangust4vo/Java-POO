@@ -25,12 +25,12 @@ public class Transaction {
 	
 	@Column(name = "value") // Same thing of table, but for columns
 	private Double value;
-	@Column(name = "transaction_date")
+	@Column(name = "date")
 	@Temporal(TemporalType.TIMESTAMP) // Specifies the date pattern (date, time_stamp, date_time)
 	private Date transactionDate;
 	@Column(name = "description", length = 150) // length specifies the VARCHAR length
 	private String description;
-	@Column(name = "transaction_type")
+	@Column(name = "type")
 	private TransactionType transactionType;
 	
 	@ManyToOne
