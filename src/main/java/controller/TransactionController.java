@@ -4,9 +4,9 @@ import model.Transaction;
 import services.TransactionService;
 
 public class TransactionController {
-	TransactionService service = new TransactionService();
+	private TransactionService service = new TransactionService();
 	
-	public Transaction insert(Transaction transaction) {
-		return service.insert(transaction);
+	public Transaction store(Transaction transaction) {
+		return service.store(transaction.getAccount().getAccountHolder().getCpf(), transaction);
 	}
 }

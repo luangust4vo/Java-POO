@@ -6,7 +6,7 @@ import java.util.List;
 import dao.AccountHolderDAO;
 import dao.TransactionDAO;
 import model.Transaction;
-import model.enums.TransactionType;
+import model.types.TransactionType;
 import utils.TransactionUtils;
 import utils.ValidationUtils;
 
@@ -14,11 +14,11 @@ public class TransactionService {
 	private final TransactionDAO dao;
 
 	public TransactionService() {
-		dao = (TransactionDAO) TransactionDAO.getInstance(Transaction.class);
+		dao = TransactionDAO.getInstance();
 	}
 
-	public void store(String cpf, Transaction transaction) {
-		ValidationUtils.validate(() -> {
+	public Transaction store(String cpf, Transaction transaction) {
+		return ValidationUtils.execute(() -> {
 			if (!validateCpf(cpf)) {
 				throw new Exception("Não existe nenhum cliente com o CPF informado.");
 			}
@@ -51,13 +51,15 @@ public class TransactionService {
 				throw new Exception("Operação bloqueada! Transação suspeita detectada.");
 			}
 
-			dao.store(transaction);
+			Transaction transaction2 = dao.store(transaction);
 
 			Double balance = dao.getBalance(cpf);
 			if (TransactionUtils.isLowBalance(balance)) {
 				throw new Exception(
 						"Atenção! Seu saldo atingiu um valor abaixo de R$ 100,00. Seu saldo agora é de R$ " + balance);
 			}
+
+			return transaction2;
 		});
 	}
 

@@ -15,7 +15,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import model.enums.AccountType;
+import model.types.AccountType;
 
 @Entity
 @Table(name = "account")

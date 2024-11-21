@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import model.enums.TransactionType;
+import model.types.TransactionType;
 
 import java.util.Date;
 

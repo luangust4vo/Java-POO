@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 import model.Transaction;
-import model.enums.TransactionType;
+import model.types.TransactionType;
 import services.TransactionService;
 
 public class TransactionUtils {

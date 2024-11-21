@@ -1,13 +1,23 @@
 package utils;
 
+import java.util.concurrent.Callable;
+
 import javax.swing.JOptionPane;
 
-import utils.interfaces.Validate;
-
 public class ValidationUtils {
-    public static void validate(Validate validation) {
+    public static <R> R execute(Callable<R> validation) {
         try {
-            validation.execute();
+            return validation.call();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Atenção!", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        return null;
+    }
+
+    public static void execute(Runnable validation) {
+        try {
+            validation.run();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Atenção!", JOptionPane.ERROR_MESSAGE);
         }

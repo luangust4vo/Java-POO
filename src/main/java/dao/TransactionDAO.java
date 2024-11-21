@@ -4,11 +4,15 @@ import java.util.Date;
 import java.util.List;
 
 import model.Transaction;
-import model.enums.TransactionType;
+import model.types.TransactionType;
 
 public class TransactionDAO extends GenericDAO<Transaction> {
 	public TransactionDAO() {
 		super(Transaction.class);
+	}
+
+	public static TransactionDAO getInstance() {
+		return new TransactionDAO();
 	}
 
 	public Double getBalance(String cpf) {
