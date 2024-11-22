@@ -1,5 +1,6 @@
 package services;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -64,7 +65,7 @@ public class TransactionService {
 	}
 
 	private boolean validateCpf(String cpf) {
-		return AccountHolderDAO.findByCpf(cpf) != null;
+		return new AccountHolderDAO().findByCpf(cpf) != null;
 	}
 
 	private boolean isSufficientBalance(String cpf, Double value) {
@@ -87,5 +88,18 @@ public class TransactionService {
 
 	public List<Transaction> getTransactionsByCpfAndDate(String cpf, Date date) {
 		return dao.getTransactionsByCpfAndDate(cpf, date);
+	}
+
+	public List<Transaction> getMonthlyStatement(String cpf, int month, int year) {
+		if (month < 1 || month > 12) {
+			throw new IllegalArgumentException("Mês inválido.");
+		} else if (year < 1900 && year > Calendar.getInstance().get(Calendar.YEAR)) {
+			throw new IllegalArgumentException("Ano inválido.");
+		}
+
+		Date startDate = TransactionUtils.getStartOfMonth(month, year);
+		Date endDate = TransactionUtils.getEndOfMonth(month, year);
+
+		return getTransactionsByCpfAndPeriod(cpf, startDate, endDate);
 	}
 }

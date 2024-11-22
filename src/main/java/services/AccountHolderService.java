@@ -1,9 +1,6 @@
 package services;
 
-import java.util.List;
-
 import dao.AccountHolderDAO;
-import model.Account;
 import model.AccountHolder;
 import utils.AccountHolderUtils;
 import utils.ValidationUtils;

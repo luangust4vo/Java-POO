@@ -11,8 +11,8 @@ public class AccountHolderDAO extends GenericDAO<AccountHolder> {
 		return new AccountHolderDAO();
 	}
 
-	public static AccountHolder findByCpf(String cpf) {
-		return getInstance(AccountHolder.class).execute(em -> em.createQuery(
+	public AccountHolder findByCpf(String cpf) {
+		return execute(em -> em.createQuery(
 			"SELECT id FROM account_holder ah WHERE ah.cpf = :cpf", AccountHolder.class)
 			.setParameter("cpf", cpf).getSingleResult()
 		);
