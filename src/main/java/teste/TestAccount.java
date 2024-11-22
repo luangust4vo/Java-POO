@@ -1,11 +1,11 @@
-public class TestAccount {
-    private String item;
+public class TestAccount<T> {
+    private T item;
 
-    public void insert(String item) {
+    public void insert(T item) {
         this.item = item;
     }
 
-    public String get() {
+    public T get() {
         return this.item;
     }
 }

@@ -27,11 +27,13 @@ public class Account {
 	@Column(name = "open_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date openDate;
-	@Column(name = "account_type")
+	@Column(name = "type")
 	@Enumerated(EnumType.STRING)
-	private AccountType accountType;
+	private AccountType type;
 	@Column(name = "is_active")
 	private boolean isActive;
+	@Column(name = "approved_limit")
+	private Double approvedLimit;
 	
 	@ManyToOne
 	@JoinColumn(name = "account_holder_id")
@@ -53,12 +55,12 @@ public class Account {
 		this.openDate = openDate;
 	}
 	
-	public AccountType getAccountType() {
-		return accountType;
+	public AccountType getType() {
+		return type;
 	}
 	
-	public void setAccountType(AccountType accountType) {
-		this.accountType = accountType;
+	public void setType(AccountType type) {
+		this.type = type;
 	}
 	
 	public AccountHolder getAccountHolder() {
@@ -68,4 +70,32 @@ public class Account {
 	public void setAccountHolder(AccountHolder accountHolder) {
 		this.accountHolder = accountHolder;
 	}
+
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
+
+	public Double getApprovedLimit() {
+		return approvedLimit;
+	}
+
+	public void setApprovedLimit(Double approvedLimit) {
+		this.approvedLimit = approvedLimit;
+	}
+
+    @Override
+    public String toString() {
+        return "Account [id=" + id + ", openDate=" + openDate + ", type=" + type + ", isActive=" + isActive
+                + ", approvedLimit=" + approvedLimit + ", accountHolder=" + accountHolder + ", getId()=" + getId()
+                + ", getOpenDate()=" + getOpenDate() + ", getType()=" + getType() + ", getAccountHolder()="
+                + getAccountHolder() + ", isActive()=" + isActive() + ", getApprovedLimit()=" + getApprovedLimit()
+                + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString()
+                + "]";
+    }
+
+	
 }

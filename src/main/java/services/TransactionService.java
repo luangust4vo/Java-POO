@@ -67,7 +67,7 @@ public class TransactionService {
 	}
 
 	private boolean validateCpf(String cpf) {
-		return new AccountHolderDAO().findByCpf(cpf) != null;
+		return new AccountHolderDAO().findOne(cpf) != null;
 	}
 
 	private boolean isSufficientBalance(String cpf, Double value) {
@@ -76,20 +76,20 @@ public class TransactionService {
 		return currentBalance != null && (currentBalance - value) >= 0;
 	}
 
-	public List<Transaction> getTransactionsByCpfAndType(String cpf, TransactionType type) {
-		return dao.getTransactionsByCpfAndType(cpf, type);
+	public List<Transaction> getTransactionsByType(String cpf, TransactionType type) {
+		return dao.getTransactionsByType(cpf, type);
 	}
 
-	public List<Transaction> getTransactionsByCpfAndPeriod(String cpf, Date startDate, Date endDate) {
-		return dao.getTransactionsByCpfAndPeriod(cpf, startDate, endDate);
+	public List<Transaction> getTransactionsByPeriod(String cpf, Date startDate, Date endDate) {
+		return dao.getTransactionsByPeriod(cpf, startDate, endDate);
 	}
 
-	public Double getAverageTransactionValueByCpfAndPeriod(String cpf, Date startDate, Date endDate) {
-		return dao.getAverageTransactionValueByCpfAndPeriod(cpf, startDate, endDate);
+	public Double getAverageTransactionValueByPeriod(String cpf, Date startDate, Date endDate) {
+		return dao.getAverageTransactionValueByPeriod(cpf, startDate, endDate);
 	}
 
-	public List<Transaction> getTransactionsByCpfAndDate(String cpf, Date date) {
-		return dao.getTransactionsByCpfAndDate(cpf, date);
+	public List<Transaction> getTransactionsByDate(String cpf, Date date) {
+		return dao.getTransactionsByDate(cpf, date);
 	}
 
 	public List<Transaction> getMonthlyStatement(String cpf, int month, int year) {
@@ -102,7 +102,7 @@ public class TransactionService {
 		Date startDate = TransactionUtils.getStartOfMonth(month, year);
 		Date endDate = TransactionUtils.getEndOfMonth(month, year);
 
-		return getTransactionsByCpfAndPeriod(cpf, startDate, endDate);
+		return getTransactionsByPeriod(cpf, startDate, endDate);
 	}
 
 	public List<Transaction> getPeriodicStatement(String cpf, String startDateStr, String endDateStr) {
@@ -117,7 +117,7 @@ public class TransactionService {
 				throw new Exception();
 			}
 
-			return dao.getTransactionsByCpfAndPeriod(cpf, startDate, endDate);
+			return dao.getTransactionsByPeriod(cpf, startDate, endDate);
 		} catch (Exception e) {
 			return new ArrayList<>();
 		}

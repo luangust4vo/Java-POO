@@ -25,7 +25,7 @@ public class TransactionDAO extends GenericDAO<Transaction> {
 				Double.class).setParameter("cpf", cpf).getSingleResult());
 	}
 
-	public List<Transaction> getTransactionsByCpfAndType(String cpf, TransactionType type) {
+	public List<Transaction> getTransactionsByType(String cpf, TransactionType type) {
 		return execute(em -> em.createQuery(
 				"SELECT t" +
 						"FROM transaction t" +
@@ -35,7 +35,7 @@ public class TransactionDAO extends GenericDAO<Transaction> {
 				Transaction.class).setParameter("cpf", cpf).setParameter("type", type).getResultList());
 	}
 
-	public List<Transaction> getTransactionsByCpfAndPeriod(String cpf, Date startDate, Date endDate) {
+	public List<Transaction> getTransactionsByPeriod(String cpf, Date startDate, Date endDate) {
 		return execute(em -> em.createQuery(
 				"SELECT t" +
 						"FROM transaction t" +
@@ -46,7 +46,7 @@ public class TransactionDAO extends GenericDAO<Transaction> {
 				.setParameter("endDate", endDate).getResultList());
 	}
 
-	public Double getAverageTransactionValueByCpfAndPeriod(String cpf, Date startDate, Date endDate) {
+	public Double getAverageTransactionValueByPeriod(String cpf, Date startDate, Date endDate) {
 		return execute(em -> em.createQuery(
 				"SELECT AVG(t.value)" +
 						"FROM transaction t" +
@@ -58,7 +58,7 @@ public class TransactionDAO extends GenericDAO<Transaction> {
 				.setParameter("endDate", endDate).getSingleResult());
 	}
 
-	public List<Transaction> getTransactionsByCpfAndDate(String cpf, Date date) {
+	public List<Transaction> getTransactionsByDate(String cpf, Date date) {
 		return execute(em -> em.createQuery(
 				"SELECT t" +
 						"FROM transaction t" +

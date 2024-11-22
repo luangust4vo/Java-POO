@@ -54,7 +54,7 @@ public class TransactionUtils {
 			return true;
 		}
 
-		List<Transaction> transactions = service.getTransactionsByCpfAndType(
+		List<Transaction> transactions = service.getTransactionsByType(
 				transaction.getAccount().getAccountHolder().getCpf(),
 				TransactionType.WITHDRAW);
 
@@ -91,13 +91,13 @@ public class TransactionUtils {
 
 		Date startDate = calendar.getTime();
 
-		return service.getAverageTransactionValueByCpfAndPeriod(cpf, startDate, today);
+		return service.getAverageTransactionValueByPeriod(cpf, startDate, today);
 	}
 
 	public static boolean isTransactionDiaryLimitReached(Transaction transaction) {
 		Date today = new Date();
 
-		List<Transaction> transactions = service.getTransactionsByCpfAndDate(
+		List<Transaction> transactions = service.getTransactionsByDate(
 				transaction.getAccount().getAccountHolder().getCpf(), today);
 
 		return transactions.size() >= 10;
