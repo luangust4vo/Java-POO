@@ -17,7 +17,7 @@ public class AccountService {
     public Account store(Account account) {
         return ValidationUtils.execute(() -> {
             if (AccountUtils.isMaximumAccountNumberReached(account.getAccountHolder().getCpf())) {
-                throw new Exception("Número máximo de contas atingido!");
+                throw new Exception("Número máximo de 3 no mesmo CPF contas atingido!");
             }
 
             Account account2 = dao.store(account);

@@ -1,5 +1,7 @@
 package services;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -101,5 +103,23 @@ public class TransactionService {
 		Date endDate = TransactionUtils.getEndOfMonth(month, year);
 
 		return getTransactionsByCpfAndPeriod(cpf, startDate, endDate);
+	}
+
+	public List<Transaction> getPeriodicStatement(String cpf, String startDateStr, String endDateStr) {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		formatter.setLenient(false);
+
+		try {
+			Date startDate = formatter.parse(startDateStr);
+			Date endDate = formatter.parse(endDateStr);
+
+			if (startDate.after(endDate)) {
+				throw new Exception();
+			}
+
+			return dao.getTransactionsByCpfAndPeriod(cpf, startDate, endDate);
+		} catch (Exception e) {
+			return new ArrayList<>();
+		}
 	}
 }
