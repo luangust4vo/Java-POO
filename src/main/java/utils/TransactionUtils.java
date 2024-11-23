@@ -55,7 +55,7 @@ public class TransactionUtils {
 		}
 
 		List<Transaction> transactions = service.getTransactionsByType(
-				transaction.getAccount().getAccountHolder().getCpf(),
+				transaction.getAccount().getId(),
 				TransactionType.WITHDRAW);
 
 		Date today = new Date();
@@ -77,12 +77,12 @@ public class TransactionUtils {
 	}
 
 	public static boolean isSuspiciousTransaction(Transaction transaction) {
-		Double average = getAverageTransactionValue(transaction.getAccount().getAccountHolder().getCpf(), 6);
+		Double average = getAverageTransactionValue(transaction.getAccount().getId(), 6);
 
 		return average != null && transaction.getValue() > (average * 2);
 	}
 
-	private static Double getAverageTransactionValue(String cpf, int months) {
+	private static Double getAverageTransactionValue(Long id, int months) {
 		Date today = new Date();
 
 		Calendar calendar = Calendar.getInstance();
@@ -91,14 +91,14 @@ public class TransactionUtils {
 
 		Date startDate = calendar.getTime();
 
-		return service.getAverageTransactionValueByPeriod(cpf, startDate, today);
+		return service.getAverageTransactionValueByPeriod(id, startDate, today);
 	}
 
 	public static boolean isTransactionDiaryLimitReached(Transaction transaction) {
 		Date today = new Date();
 
 		List<Transaction> transactions = service.getTransactionsByDate(
-				transaction.getAccount().getAccountHolder().getCpf(), today);
+				transaction.getAccount().getId(), today);
 
 		return transactions.size() >= 10;
 	}

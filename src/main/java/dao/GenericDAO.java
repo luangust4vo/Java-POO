@@ -7,7 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-public class GenericDAO<T> {
+public abstract class GenericDAO<T> {
     private final static EntityManagerFactory factory;
     private final Class<T> entityClass;
 
@@ -17,10 +17,6 @@ public class GenericDAO<T> {
 
     public GenericDAO(Class<T> entityClass) {
         this.entityClass = entityClass;
-    }
-
-    public static <T> GenericDAO<T> getInstance(Class<T> entityClass) {
-        return new GenericDAO<>(entityClass);
     }
 
     private EntityManager getEntityManager() {

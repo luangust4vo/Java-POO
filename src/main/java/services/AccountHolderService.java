@@ -14,7 +14,7 @@ public class AccountHolderService {
 
     public AccountHolder store (AccountHolder accountHolder) {
         return ValidationUtils.execute(() -> {
-            if (AccountHolderUtils.validateCpf(accountHolder.getCpf())) {
+            if (!AccountHolderUtils.validateCpf(accountHolder.getCpf())) {
                 throw new Exception("CPF inválido. Informe um CPF válido para criar uma conta");
             }
 

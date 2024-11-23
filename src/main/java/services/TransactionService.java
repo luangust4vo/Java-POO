@@ -33,7 +33,7 @@ public class TransactionService {
 			Double adjustedValue = TransactionUtils.addTransactionFee(transaction);
 			transaction.setValue(adjustedValue);
 
-			if (!isSufficientBalance(cpf, transaction.getValue())) {
+			if (!isSufficientBalance(transaction.getAccount().getId(), transaction.getValue())) {
 				throw new Exception("Operação bloqueada! Seu saldo é insuficiente para realizar a transação");
 			}
 
@@ -56,7 +56,7 @@ public class TransactionService {
 
 			Transaction transaction2 = dao.store(transaction);
 
-			Double balance = dao.getBalance(cpf);
+			Double balance = dao.getBalance(transaction.getAccount().getId());
 			if (TransactionUtils.isLowBalance(balance)) {
 				throw new Exception(
 						"Atenção! Seu saldo atingiu um valor abaixo de R$ 100,00. Seu saldo agora é de R$ " + balance);
@@ -70,29 +70,29 @@ public class TransactionService {
 		return new AccountHolderDAO().findOne(cpf) != null;
 	}
 
-	private boolean isSufficientBalance(String cpf, Double value) {
-		Double currentBalance = dao.getBalance(cpf);
+	private boolean isSufficientBalance(Long id, Double value) {
+		Double currentBalance = dao.getBalance(id);
 
 		return currentBalance != null && (currentBalance - value) >= 0;
 	}
 
-	public List<Transaction> getTransactionsByType(String cpf, TransactionType type) {
-		return dao.getTransactionsByType(cpf, type);
+	public List<Transaction> getTransactionsByType(Long id, TransactionType type) {
+		return dao.getTransactionsByType(id, type);
 	}
 
-	public List<Transaction> getTransactionsByPeriod(String cpf, Date startDate, Date endDate) {
-		return dao.getTransactionsByPeriod(cpf, startDate, endDate);
+	public List<Transaction> getTransactionsByPeriod(Long id, Date startDate, Date endDate) {
+		return dao.getTransactionsByPeriod(id, startDate, endDate);
 	}
 
-	public Double getAverageTransactionValueByPeriod(String cpf, Date startDate, Date endDate) {
-		return dao.getAverageTransactionValueByPeriod(cpf, startDate, endDate);
+	public Double getAverageTransactionValueByPeriod(Long id, Date startDate, Date endDate) {
+		return dao.getAverageTransactionValueByPeriod(id, startDate, endDate);
 	}
 
-	public List<Transaction> getTransactionsByDate(String cpf, Date date) {
-		return dao.getTransactionsByDate(cpf, date);
+	public List<Transaction> getTransactionsByDate(Long id, Date date) {
+		return dao.getTransactionsByDate(id, date);
 	}
 
-	public List<Transaction> getMonthlyStatement(String cpf, int month, int year) {
+	public List<Transaction> getMonthlyStatement(Long id, int month, int year) {
 		if (month < 1 || month > 12) {
 			throw new IllegalArgumentException("Mês inválido.");
 		} else if (year < 1900 && year > Calendar.getInstance().get(Calendar.YEAR)) {
@@ -102,10 +102,10 @@ public class TransactionService {
 		Date startDate = TransactionUtils.getStartOfMonth(month, year);
 		Date endDate = TransactionUtils.getEndOfMonth(month, year);
 
-		return getTransactionsByPeriod(cpf, startDate, endDate);
+		return getTransactionsByPeriod(id, startDate, endDate);
 	}
 
-	public List<Transaction> getPeriodicStatement(String cpf, String startDateStr, String endDateStr) {
+	public List<Transaction> getPeriodicStatement(Long id, String startDateStr, String endDateStr) {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		formatter.setLenient(false);
 
@@ -117,9 +117,13 @@ public class TransactionService {
 				throw new Exception();
 			}
 
-			return dao.getTransactionsByPeriod(cpf, startDate, endDate);
+			return dao.getTransactionsByPeriod(id, startDate, endDate);
 		} catch (Exception e) {
 			return new ArrayList<>();
 		}
+	}
+
+	public Double getBalance(Long id) {
+		return dao.getBalance(id);
 	}
 }

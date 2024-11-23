@@ -2,7 +2,7 @@ package dao;
 
 import model.AccountHolder;
 
-public class AccountHolderDAO extends GenericDAO<AccountHolder> {
+public final class AccountHolderDAO extends GenericDAO<AccountHolder> {
 	public AccountHolderDAO() {
 		super(AccountHolder.class);
 	}

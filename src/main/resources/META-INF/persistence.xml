@@ -6,7 +6,7 @@
 			<property name="javax.persistence.jdbc.driver"
 				value="com.mysql.cj.jdbc.Driver" />
 			<property name="javax.persistence.jdbc.url"
-				value="jdbc:mysql://localhost:3304/banco?useSSL=false" />
+				value="jdbc:mysql://localhost:5244/banco?useSSL=false" />
 			<property name="javax.persistence.jdbc.user" value="root" />
 			<property name="javax.persistence.jdbc.password" value="" />
 			<property name="hibernate.dialect"

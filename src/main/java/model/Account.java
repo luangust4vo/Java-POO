@@ -34,6 +34,8 @@ public class Account {
 	private boolean isActive;
 	@Column(name = "approved_limit")
 	private Double approvedLimit;
+	@Column(name = "password")
+	private String password;
 	
 	@ManyToOne
 	@JoinColumn(name = "account_holder_id")
@@ -87,6 +89,14 @@ public class Account {
 		this.approvedLimit = approvedLimit;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
     @Override
     public String toString() {
         return "Account [id=" + id + ", openDate=" + openDate + ", type=" + type + ", isActive=" + isActive
@@ -95,7 +105,5 @@ public class Account {
                 + getAccountHolder() + ", isActive()=" + isActive() + ", getApprovedLimit()=" + getApprovedLimit()
                 + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString()
                 + "]";
-    }
-
-	
+    }	
 }

@@ -4,7 +4,7 @@ import java.util.List;
 
 import model.Account;
 
-public class AccountDAO extends GenericDAO<Account> {
+public final class AccountDAO extends GenericDAO<Account> {
     public AccountDAO() {
         super(Account.class);
     }
