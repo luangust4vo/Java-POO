@@ -27,11 +27,11 @@ public class Transaction {
 	private Double value;
 	@Column(name = "date")
 	@Temporal(TemporalType.TIMESTAMP) // Specifies the date pattern (date, time_stamp, date_time)
-	private Date transactionDate;
+	private Date date;
 	@Column(name = "description", length = 150) // length specifies the VARCHAR length
 	private String description;
 	@Column(name = "type")
-	private TransactionType transactionType;
+	private TransactionType type;
 	
 	@ManyToOne
 	@JoinColumn(name = "account_id")
@@ -57,12 +57,12 @@ public class Transaction {
 		return value;
 	}
 	
-	public Date getTransactionDate() {
-		return transactionDate;
+	public Date getDate() {
+		return date;
 	}
 	
-	public void setTransactionDate(Date transactionDate) {
-		this.transactionDate = transactionDate;
+	public void setDate(Date date) {
+		this.date = date;
 	}
 	
 	public String getDescription() {
@@ -73,12 +73,12 @@ public class Transaction {
 		this.description = description;
 	}
 	
-	public TransactionType getTransactionType() {
-		return transactionType;
+	public TransactionType getType() {
+		return type;
 	}
 	
-	public void setTransactionType(TransactionType transactionType) {
-		this.transactionType = transactionType;
+	public void setType(TransactionType type) {
+		this.type = type;
 	}
 
 	public Account getAccount() {

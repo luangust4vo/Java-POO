@@ -102,7 +102,7 @@ public class TransactionService {
 		Date startDate = TransactionUtils.getStartOfMonth(month, year);
 		Date endDate = TransactionUtils.getEndOfMonth(month, year);
 
-		return getTransactionsByPeriod(id, startDate, endDate);
+		return dao.getTransactionsByPeriod(id, startDate, endDate);
 	}
 
 	public List<Transaction> getPeriodicStatement(Long id, String startDateStr, String endDateStr) {

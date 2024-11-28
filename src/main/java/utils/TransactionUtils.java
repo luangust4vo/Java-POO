@@ -17,7 +17,7 @@ public class TransactionUtils {
 	public static Double addTransactionFee(Transaction transaction) {
 		Double adjustedValue = transaction.getValue();
 
-		switch (transaction.getTransactionType()) {
+		switch (transaction.getType()) {
 			case WITHDRAW:
 				adjustedValue += 2;
 				break;
@@ -33,11 +33,11 @@ public class TransactionUtils {
 	}
 
 	public static boolean isValidPixValue(Transaction transaction) {
-		return !transaction.getTransactionType().equals(TransactionType.PIX) || transaction.getValue() <= 300;
+		return !transaction.getType().equals(TransactionType.PIX) || transaction.getValue() <= 300;
 	}
 
 	public static boolean isValidPixSchedule(Transaction transaction) {
-		if (!transaction.getTransactionType().equals(TransactionType.PIX)) {
+		if (!transaction.getType().equals(TransactionType.PIX)) {
 			return true;
 		}
 
@@ -50,7 +50,7 @@ public class TransactionUtils {
 	}
 
 	public static boolean isValidWithdrawTransaction(Transaction transaction) {
-		if (!transaction.getTransactionType().equals(TransactionType.WITHDRAW)) {
+		if (!transaction.getType().equals(TransactionType.WITHDRAW)) {
 			return true;
 		}
 
@@ -60,7 +60,7 @@ public class TransactionUtils {
 
 		Date today = new Date();
 		Double totalWithdraw = transactions.stream()
-				.filter(t -> isSameDay(t.getTransactionDate(), today))
+				.filter(t -> isSameDay(t.getDate(), today))
 				.mapToDouble(Transaction::getValue)
 				.sum();
 
