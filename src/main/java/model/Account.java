@@ -24,6 +24,8 @@ public class Account {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@Column(name = "name")
+	private String name;
 	@Column(name = "open_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date openDate;
@@ -97,6 +99,14 @@ public class Account {
 		this.password = password;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}	
+
     @Override
     public String toString() {
         return "Account [id=" + id + ", openDate=" + openDate + ", type=" + type + ", isActive=" + isActive
@@ -105,5 +115,5 @@ public class Account {
                 + getAccountHolder() + ", isActive()=" + isActive() + ", getApprovedLimit()=" + getApprovedLimit()
                 + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString()
                 + "]";
-    }	
+    }
 }

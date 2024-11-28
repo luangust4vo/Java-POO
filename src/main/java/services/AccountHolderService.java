@@ -23,4 +23,16 @@ public class AccountHolderService {
             return accountHolder2;
         });
     }
+
+    public AccountHolder findByCpf(String cpf) {
+        return ValidationUtils.execute(() -> {
+            if (!AccountHolderUtils.validateCpf(cpf)) {
+                throw new Exception("CPF inválido. Informe um CPF válido para acessar a conta");
+            }
+
+            AccountHolder accountHolder = dao.findOne(cpf);
+
+            return accountHolder;
+        });
+    }
 }

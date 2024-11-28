@@ -15,7 +15,7 @@ public final class AccountDAO extends GenericDAO<Account> {
 
     public List<Account> getAccountsByCpf(String cpf) {
         return execute(em -> em.createQuery(
-                "SELECT a FROM account JOIN account_holder ah ON a.account_holder_id = ah.id WHERE ah.cpf = :cpf",
+                "SELECT a FROM Account a WHERE a.accountHolder.cpf = :cpf",
                 Account.class).setParameter("cpf", cpf).getResultList());
     }
 }

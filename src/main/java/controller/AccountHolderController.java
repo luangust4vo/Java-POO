@@ -9,4 +9,8 @@ public class AccountHolderController {
     public AccountHolder store(AccountHolder accountHolder) {
         return service.store(accountHolder);
     }
+
+    public AccountHolder findByCpf(String cpf) {
+        return service.findByCpf(cpf);
+    }
 }

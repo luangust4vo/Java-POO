@@ -13,7 +13,7 @@ public final class AccountHolderDAO extends GenericDAO<AccountHolder> {
 
 	public AccountHolder findOne(String cpf) {
 		return execute(em -> em.createQuery(
-			"SELECT id FROM account_holder ah WHERE ah.cpf = :cpf", AccountHolder.class)
+			"SELECT ah FROM AccountHolder ah WHERE ah.cpf = :cpf", AccountHolder.class)
 			.setParameter("cpf", cpf).getSingleResult()
 		);
 	}
