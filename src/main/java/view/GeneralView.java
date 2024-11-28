@@ -20,42 +20,17 @@ public class GeneralView {
 	private static final AccountController ac = new AccountController();
 
 	public static void main(String[] args) {
-		int option = 0;
+		int option;
 
-		loop: do {
+		loop: while(true) {
 			System.out.println("Olá! Bem vindo ao YouBank :). Já é um cliente nosso?");
 			System.out.println("1. SIM :)\n2. NÃO :(\n3. SAIR :(");
+
 			option = scan.nextInt();
 			scan.nextLine();
 
 			if (option == 1) {
-				System.out.println("Que bom! Então me diga o que deseja fazer:");
-				System.out.println("1. Acessar minha conta\n2. Criar uma nova conta\n3. Sair");
-
-				option = scan.nextInt();
-				scan.nextLine();
-
-				switch (option) {
-					case 1:
-						if (loginIntoAccount()) {
-							System.out.println("logado");
-							// Algum método para fazer transação, ver extrato, etc
-						}
-
-						break loop;
-					case 2:
-						if (registerNewAccount()) {
-							System.out.println("logado");
-							// Algum método para fazer transação, ver extrato, etc
-						}
-
-						break loop;
-					case 3:
-						break loop;
-					default:
-						System.out.println("Não tem essa opção >:(");
-						break;
-				}
+				showMenu();
 			} else if (option == 2) {
 				if (registerNewAccountHolder()) {
 					continue;
@@ -63,12 +38,46 @@ public class GeneralView {
 
 				System.out.println("Algum problema ocorreu ao tentar cadastrar um novo usuário :(");
 				return;
-			} else if (option == 3) break;
+			} else if (option == 3) break loop;
 			else {
 				System.out.println("Não tem essa opção >:(");
 				break;
 			}
-		} while (option != 0);
+		}
+	}
+
+	private static void showMenu() {
+		int option;
+
+		while(true) {
+			System.out.println("Que bom! Então me diga o que deseja fazer:");
+			System.out.println("1. Acessar minha conta\n2. Criar uma nova conta\n3. Sair");
+
+			option = scan.nextInt();
+			scan.nextLine();
+
+			switch (option) {
+				case 1:
+					if (loginIntoAccount()) {
+						System.out.println("logado");
+						// Algum método para fazer transação, ver extrato, etc
+					}
+
+					break;
+				case 2:
+					if (registerNewAccount()) {
+						System.out.println("logado");
+						// Algum método para fazer transação, ver extrato, etc
+					}
+
+					break;
+				case 3:
+					break;
+				default:
+					System.out.println("Não tem essa opção >:(");
+					break;
+			}
+		}
 	}
 
 	private static boolean registerNewAccountHolder() {
