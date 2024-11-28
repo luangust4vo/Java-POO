@@ -22,12 +22,7 @@ public class AccountService {
 
     public Account store(Account account) {
         return ValidationUtils.execute(() -> {
-            if (AccountUtils.isMaximumAccountNumberReached(account.getAccountHolder().getCpf())) {
-                throw new Exception("Número máximo de 3 no mesmo CPF contas atingido!");
-            }
-
-            Account account2 = dao.store(account);
-            return account2;
+            return dao.store(account);
         });
     }
 
@@ -56,5 +51,9 @@ public class AccountService {
         if (account.getType().equals(AccountType.SAVINGS_ACCOUNT)) {
            return new TransactionService().getBalance(account.getId()) * Math.pow((1 + COMPOUND_INTEREST_RATE), months);
         } else return 0.0;
+    }
+    
+    public boolean isMaximumAccountNumberReached(String cpf) {
+    	return AccountUtils.isMaximumAccountNumberReached(cpf);
     }
 }
