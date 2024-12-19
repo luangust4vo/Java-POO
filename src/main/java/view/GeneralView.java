@@ -51,7 +51,7 @@ public class GeneralView {
 	private static void showMenu() {
 		int option;
 
-		while(true) {
+		loop: while(true) {
 			System.out.println("Que bom! Então me diga o que deseja fazer:");
 			System.out.println("1. Acessar minha conta\n2. Criar uma nova conta\n3. Sair");
 
@@ -76,7 +76,7 @@ public class GeneralView {
 
 					break;
 				case 3:
-					break;
+					break loop;
 				default:
 					System.out.println("Não tem essa opção >:(");
 					break;
@@ -149,6 +149,11 @@ public class GeneralView {
 	private static Account registerNewAccount() {
 		System.out.println("Certo! Então me diga o seu CPF:");
 		String cpf = scan.nextLine();
+		
+		if (ac.isMaximumAccountNumberReached(cpf)) {
+			System.out.println("Número máximo de contas atingido. Você só pode ter 3 contas");
+			return null;
+		}
 
 		AccountHolder accountHolder = ahc.findByCpf(cpf);
 		if (accountHolder == null) {
@@ -230,6 +235,10 @@ public class GeneralView {
 			option = scan.nextInt();
 			scan.nextLine();
 
+			if (option == 6) {
+				return;
+			}
+			
 			System.out.println("Informe o valor da transação:");
 			double amount = scan.nextDouble();
 			scan.nextLine();
@@ -242,23 +251,34 @@ public class GeneralView {
 			switch (option) {
 				case 1:
 					transaction.setType(TransactionType.DEPOSIT);
+					transaction.setDescription(TransactionType.DEPOSIT + " transaction realized!");
 					break;
 				case 2:
 					transaction.setType(TransactionType.WITHDRAW);
+					transaction.setDescription(TransactionType.WITHDRAW + " transaction realized!");
 					break;
 				case 3:
 					transaction.setType(TransactionType.PAYMENT);
+					transaction.setDescription(TransactionType.PAYMENT + " transaction realized!");
 					break;
 				case 4:
 					transaction.setType(TransactionType.DEBIT_CARD);
-					return;
+					transaction.setDescription(TransactionType.DEBIT_CARD + " transaction realized!");
+					break;
 				case 5:
-					transaction.setType(TransactionType.PIX);	
-					return;
+					transaction.setType(TransactionType.PIX);
+					transaction.setDescription(TransactionType.PIX + " transaction realized!");
+					break;
 				default:
 					System.out.println("Opção inválida. Tente novamente.");
 					break;
 			}
+			
+			transaction = tc.store(transaction);
+			
+			if (transaction != null) {
+				System.out.println("Transação realizada com sucesso!");
+			} else System.out.println("Algum erro aconteceu, transação cancelada");
 		}
 	}
 

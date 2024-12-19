@@ -33,7 +33,7 @@ public class TransactionService {
 			Double adjustedValue = TransactionUtils.addTransactionFee(transaction);
 			transaction.setValue(adjustedValue);
 
-			if (!isSufficientBalance(transaction.getAccount().getId(), transaction.getValue())) {
+			if (!transaction.getType().equals(TransactionType.DEPOSIT) && !isSufficientBalance(transaction.getAccount().getId(), transaction.getValue())) {
 				throw new Exception("Operação bloqueada! Seu saldo é insuficiente para realizar a transação");
 			}
 
@@ -51,6 +51,7 @@ public class TransactionService {
 			}
 
 			if (TransactionUtils.isSuspiciousTransaction(transaction)) {
+				System.out.println("chegou aqui");
 				throw new Exception("Operação bloqueada! Transação suspeita detectada.");
 			}
 
@@ -124,6 +125,7 @@ public class TransactionService {
 	}
 
 	public Double getBalance(Long id) {
-		return dao.getBalance(id);
+		Double balance = dao.getBalance(id);
+		return balance != null ? balance : 0.0;
 	}
 }

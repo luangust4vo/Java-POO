@@ -13,8 +13,4 @@ public class AccountUtils {
 
         return accounts.size() >= 3;
 	}
-
-  // public static Double calculateMonthlyIncome(Account account) {
-
-  // }
 }

@@ -15,4 +15,8 @@ public class AccountController {
     public List<Account> getAccountsByCpf(String cpf) {
         return service.getAccountsByCpf(cpf);
     }
+    
+    public boolean isMaximumAccountNumberReached(String cpf) {
+    	return service.isMaximumAccountNumberReached(cpf);
+    }
 }
