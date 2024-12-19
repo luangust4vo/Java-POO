@@ -1,6 +1,7 @@
 package view;
 
 import java.security.MessageDigest;
+import java.text.SimpleDateFormat;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
@@ -282,5 +283,72 @@ public class GeneralView {
 		}
 	}
 
-	private static void showStatementMenu(Account account) {}
+	private static void showStatementMenu(Account account) {
+		System.out.println("Qual tipo de extrato deseja visualizar?");
+		System.out.println("1. Mensal\n2. Período específico\n3. Voltar");
+	
+		int option = scan.nextInt();
+		scan.nextLine();
+	
+		switch (option) {
+			case 1:
+				viewMonthlyStatement(account);
+				break;
+			case 2:
+				viewPeriodicStatement(account);
+				break;
+			case 3:
+				System.out.println("Voltando ao menu anterior...");
+				return;
+			default:
+				System.out.println("Opção inválida. Tente novamente.");
+		}
+	}
+	
+	private static void viewMonthlyStatement(Account account) {
+		System.out.println("Digite o mês (1-12):");
+		int month = scan.nextInt();
+		scan.nextLine();
+	
+		System.out.println("Digite o ano:");
+		int year = scan.nextInt();
+		scan.nextLine();
+	
+		List<Transaction> transactions = tc.getMonthlyStatement(account.getId(), month, year);
+	
+		if (transactions.isEmpty()) {
+			System.out.println("Nenhuma transação encontrada para o período informado.");
+		} else {
+			System.out.println("Extrato do mês " + month + "/" + year + ":");
+			transactions.forEach(tx -> {
+				System.out.printf("Data: %s | Tipo: %s | Valor: %.2f | Descrição: %s\n",
+						tx.getDate(), tx.getType(), tx.getValue(), tx.getDescription());
+			});
+		}
+	}
+	
+	private static void viewPeriodicStatement(Account account) {
+    try {
+        System.out.println("Digite a data inicial no formato dd/MM/yyyy:");
+        String startDate = scan.nextLine();
+
+        System.out.println("Digite a data final no formato dd/MM/yyyy:");
+        String endDate = scan.nextLine();
+
+        List<Transaction> transactions = tc.getPeriodicStatement(account.getId(), startDate, endDate);
+
+        if (transactions.isEmpty()) {
+            System.out.println("Nenhuma transação encontrada para o período informado.");
+        } else {
+            System.out.println("Extrato de " + startDate + " a " + endDate + ":");
+            transactions.forEach(tx -> {
+                System.out.printf("Data: %s | Tipo: %s | Valor: %.2f | Descrição: %s\n",
+                        tx.getDate(), tx.getType(), tx.getValue(), tx.getDescription());
+            });
+        }
+    } catch (Exception e) {
+        System.out.println("Erro ao processar as datas. Certifique-se de usar o formato dd/MM/yyyy.");
+    }
+}
+
 }

@@ -4,13 +4,10 @@ import java.util.List;
 
 import model.Account;
 import services.AccountService;
+import services.BasicService;
 
-public class AccountController {
+public class AccountController implements BasicController<Account> {
     private AccountService service = new AccountService();
-
-    public Account store(Account account) {
-       return service.store(account);
-    }
 
     public List<Account> getAccountsByCpf(String cpf) {
         return service.getAccountsByCpf(cpf);
@@ -18,5 +15,10 @@ public class AccountController {
     
     public boolean isMaximumAccountNumberReached(String cpf) {
     	return service.isMaximumAccountNumberReached(cpf);
+    }
+
+    @Override
+    public BasicService<Account> getService() {
+        return service;
     }
 }

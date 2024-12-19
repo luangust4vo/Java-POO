@@ -1,17 +1,19 @@
 package services;
 
 import dao.AccountHolderDAO;
+import dao.GenericDAO;
 import model.AccountHolder;
 import utils.AccountHolderUtils;
 import utils.ValidationUtils;
 
-public class AccountHolderService {
+public class AccountHolderService implements BasicService<AccountHolder> {
     private final AccountHolderDAO dao;
      
     public AccountHolderService() {
         dao = AccountHolderDAO.getInstance();
     }
 
+    @Override
     public AccountHolder store (AccountHolder accountHolder) {
         return ValidationUtils.execute(() -> {
             if (!AccountHolderUtils.validateCpf(accountHolder.getCpf())) {
@@ -34,5 +36,10 @@ public class AccountHolderService {
 
             return accountHolder;
         });
+    }
+
+    @Override
+    public GenericDAO<AccountHolder> getDAO() {
+        return dao;
     }
 }

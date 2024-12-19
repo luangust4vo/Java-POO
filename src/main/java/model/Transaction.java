@@ -33,10 +33,7 @@ public class Transaction {
 	@Column(name = "description", length = 150) // length specifies the VARCHAR length
 	private String description;
 	@Column(name = "type")
-<<<<<<< HEAD
-=======
 	@Enumerated(EnumType.STRING)
->>>>>>> a774996dcae14786e906a58a9d490d676ee999a2
 	private TransactionType type;
 	
 	@ManyToOne

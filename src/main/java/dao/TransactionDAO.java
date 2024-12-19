@@ -17,11 +17,7 @@ public final class TransactionDAO extends GenericDAO<Transaction> {
 
 	public Double getBalance(Long id) {
 		return execute(em -> em.createQuery(
-<<<<<<< HEAD
-				"SELECT SUM(CASE WHEN t.type = 'DEPOSIT' THEN t.amount ELSE -t.amount END)" +
-=======
 				"SELECT SUM(CASE WHEN t.type = 'DEPOSIT' THEN t.value ELSE -t.value END)" +
->>>>>>> a774996dcae14786e906a58a9d490d676ee999a2
 						"FROM Transaction t WHERE t.account.id = :id",
 				Double.class).setParameter("id", id).getSingleResult());
 	}
@@ -42,11 +38,7 @@ public final class TransactionDAO extends GenericDAO<Transaction> {
 	public Double getAverageTransactionValueByPeriod(Long id, Date startDate, Date endDate) {
 		return execute(em -> em.createQuery(
 				"SELECT AVG(t.value) FROM Transaction t WHERE t.account.id = :id" +
-<<<<<<< HEAD
-						"AND t.date BETWEEN :startDate AND :endDate GROUP BY t.account.id",
-=======
 						" AND t.date BETWEEN :startDate AND :endDate GROUP BY t.account.id",
->>>>>>> a774996dcae14786e906a58a9d490d676ee999a2
 				Double.class).setParameter("id", id).setParameter("startDate", startDate)
 				.setParameter("endDate", endDate).getSingleResult());
 	}

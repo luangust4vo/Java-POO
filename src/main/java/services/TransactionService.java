@@ -7,22 +7,23 @@ import java.util.Date;
 import java.util.List;
 
 import dao.AccountHolderDAO;
+import dao.GenericDAO;
 import dao.TransactionDAO;
 import model.Transaction;
 import model.types.TransactionType;
 import utils.TransactionUtils;
 import utils.ValidationUtils;
 
-public class TransactionService {
+public class TransactionService implements BasicService<Transaction> {
 	private final TransactionDAO dao;
 
 	public TransactionService() {
 		dao = TransactionDAO.getInstance();
 	}
 
-	public Transaction store(String cpf, Transaction transaction) {
+	public Transaction store(Transaction transaction) {
 		return ValidationUtils.execute(() -> {
-			if (!validateCpf(cpf)) {
+			if (!validateCpf(transaction.getAccount().getAccountHolder().getCpf())) {
 				throw new Exception("Não existe nenhum cliente com o CPF informado.");
 			}
 
@@ -114,6 +115,14 @@ public class TransactionService {
 			Date startDate = formatter.parse(startDateStr);
 			Date endDate = formatter.parse(endDateStr);
 
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(endDate);
+			cal.set(Calendar.HOUR_OF_DAY, 23);
+			cal.set(Calendar.MINUTE, 59);
+			cal.set(Calendar.SECOND, 59);
+			cal.set(Calendar.MILLISECOND, 999);
+			endDate = cal.getTime();
+
 			if (startDate.after(endDate)) {
 				throw new Exception();
 			}
@@ -127,5 +136,10 @@ public class TransactionService {
 	public Double getBalance(Long id) {
 		Double balance = dao.getBalance(id);
 		return balance != null ? balance : 0.0;
+	}
+
+	@Override
+	public GenericDAO<Transaction> getDAO() {
+		return dao;
 	}
 }

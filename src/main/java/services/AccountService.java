@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import dao.AccountDAO;
+import dao.GenericDAO;
 import dao.TransactionDAO;
 import model.Account;
 import model.Transaction;
@@ -12,7 +13,7 @@ import model.types.AccountType;
 import utils.AccountUtils;
 import utils.ValidationUtils;
 
-public class AccountService {
+public class AccountService implements BasicService<Account> {
     private final AccountDAO dao;
     private final static Double COMPOUND_INTEREST_RATE = 0.03;
 
@@ -20,6 +21,7 @@ public class AccountService {
 		dao = AccountDAO.getInstance();
 	}
 
+    @Override
     public Account store(Account account) {
         return ValidationUtils.execute(() -> {
             return dao.store(account);
@@ -55,5 +57,10 @@ public class AccountService {
     
     public boolean isMaximumAccountNumberReached(String cpf) {
     	return AccountUtils.isMaximumAccountNumberReached(cpf);
+    }
+
+    @Override
+    public GenericDAO<Account> getDAO() {
+        return dao;
     }
 }
